@@ -1,0 +1,1973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>History Summary — Day2DayTrades</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh;display:flex}
+.sidebar{width:240px;min-width:240px;background:#0d1117;border-right:1px solid #21262d;
+         height:100vh;position:sticky;top:0;overflow-y:auto;padding:20px 0;flex-shrink:0}
+.sidebar-title{padding:0 18px 14px;font-size:.72rem;font-weight:700;letter-spacing:2px;
+               text-transform:uppercase;color:#58a6ff;border-bottom:1px solid #21262d;margin-bottom:10px}
+.sidebar a{display:block;color:#8b949e;padding:8px 18px;font-size:.8rem;text-decoration:none;
+           border-left:3px solid transparent;transition:.15s}
+.sidebar a:hover{color:#e6edf3;background:#161b22;border-left-color:#58a6ff}
+.sidebar a.active{color:#e6edf3;background:#161b22;border-left-color:#58a6ff;font-weight:600}
+.sidebar-section{padding:14px 18px 6px;font-size:.65rem;font-weight:700;letter-spacing:1.5px;
+                 text-transform:uppercase;color:#30363d;margin-top:6px}
+.main{flex:1;overflow-y:auto;min-height:100vh}
+.topbar{background:#161b22;border-bottom:2px solid #30363d;padding:18px 28px;
+        display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.topbar-title{font-size:1.2rem;font-weight:700;color:#e6edf3}
+.topbar-sub{font-size:.76rem;color:#8b949e;margin-top:4px}
+.topbar-pnl .val{font-size:1.6rem;font-weight:700}
+.topbar-pnl .lbl{font-size:.72rem;color:#8b949e;text-align:right}
+.section-label{padding:20px 28px 8px;font-size:.68rem;font-weight:700;letter-spacing:2px;
+               text-transform:uppercase;color:#8b949e;border-top:1px solid #21262d}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;padding:0 28px 20px}
+.kpi{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:14px;text-align:center}
+.kpi .v{font-size:1.25rem;font-weight:700;margin-top:4px}
+.kpi .l{font-size:.68rem;color:#8b949e;margin-top:4px}
+.g{color:#3fb950}.r{color:#f85149}.b{color:#58a6ff}.y{color:#f0b429}.p{color:#bc8cff}.o{color:#fb8500}
+.section{padding:0 28px 28px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:18px;margin-bottom:18px}
+.card h3{font-size:.82rem;color:#8b949e;margin-bottom:14px;font-weight:600}
+.charges-bar{display:flex;gap:32px;flex-wrap:wrap;font-size:.8rem;color:#8b949e}
+.charges-bar span{font-weight:600}
+.tbl-wrap{overflow-x:auto;border-radius:8px}
+table{width:100%;border-collapse:collapse;font-size:.76rem}
+th{background:#21262d;color:#8b949e;padding:8px 10px;text-align:left;white-space:nowrap;
+   position:sticky;top:0;z-index:1;border-bottom:1px solid #30363d}
+td{padding:7px 10px;border-bottom:1px solid #21262d;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#21262d88}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.7rem;font-weight:700}
+.buy-badge{background:#1a3a2a;color:#3fb950}
+.sell-badge{background:#3a1a1a;color:#f85149}
+.footer-ts{font-size:.7rem;color:#484f58;text-align:right;margin-top:6px}
+.menu-btn{display:none;background:#21262d;border:1px solid #30363d;border-radius:6px;
+          color:#e6edf3;padding:7px 14px;cursor:pointer;font-size:.85rem;margin:12px 16px}
+@media(max-width:768px){
+  body{flex-direction:column}
+  .sidebar{width:100%;height:auto;position:relative;border-right:none;
+           border-bottom:1px solid #21262d;display:none;padding:10px 0}
+  .sidebar.open{display:block}
+  .menu-btn{display:block}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<button class="menu-btn" onclick="toggleMenu()">&#9776; Menu</button>
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-title">&#128202; Day2Day Trades</div>
+  <a href="bajfinance_strategy_log.html" class="">Bajaj Finance Strategy</a>
+<a href="banknifty_atm_V1.html" class="">BN ATM V1</a>
+<a href="banknifty_atm_V2.html" class="">BN ATM V2</a>
+<a href="banknifty_atm_V3.html" class="">BN ATM V3</a>
+<a href="banknifty_atm_V4.html" class="">BN ATM V4</a>
+<a href="banknifty_atm_V5.html" class="">BN ATM V5</a>
+<a href="banknifty_atm_V6.html" class="">BN ATM V6</a>
+<a href="banknifty_atm_strategy.html" class="">BN ATM Strategy V1</a>
+<a href="banknifty_atm_strategy_v2.html" class="">BN ATM Strategy V2</a>
+<a href="banknifty_atm_strategy_v7.html" class="">BN ATM Strategy V7</a>
+<a href="banknifty_atm_strategyv2.html" class="">BN ATM Strategy V2 (old)</a>
+<a href="banknifty_ltq_pure_v1.html" class="">BN LTQ Pure V1</a>
+<a href="banknifty_ltq_strategy_v1.html" class="">BN LTQ Strategy V1</a>
+<a href="banknifty_straddle_v3_trades.html" class="">BN Straddle V3</a>
+<a href="banknifty_trades.html" class="">BankNifty Trades</a>
+<a href="nifty50_atm_V6.html" class="">Nifty50 ATM V6</a>
+<a href="nifty50_atm_V7.html" class="">Nifty50 ATM V7</a>
+<a href="nifty_niftybees_strategy_log.html" class="">Nifty Bees Strategy</a>
+<div class="sidebar-section">Reports</div>
+<a href="history_summary.html">&#128197; History Summary</a>
+
+</div>
+<div class="main">
+  <div class="topbar">
+    <div>
+      <div class="topbar-title">&#128197; History Summary</div>
+      <div class="topbar-sub" id="datetime"></div>
+    </div>
+    <div class="topbar-pnl">
+      <div class="val" style="color:#f85149">&#8377;-22540.0</div>
+      <div class="lbl">All-time Net P&amp;L</div>
+    </div>
+  </div>
+
+  <div class="section-label">&#9889; All-time Totals</div>
+  <div class="kpis">
+    <div class="kpi"><div class="l">Gross P&amp;L</div><div class="v b">&#8377;195680.0</div></div>
+    <div class="kpi"><div class="l">Total Broker Charges</div><div class="v o">&#8377;218220</div></div>
+    <div class="kpi"><div class="l">Net P&amp;L</div><div class="v" style="color:#f85149">&#8377;-22540.0</div></div>
+    <div class="kpi"><div class="l">Avg Win Rate</div><div class="v y">59.78%</div></div>
+  </div>
+
+  <div class="section-label">&#128203; Daily Strategy Log</div>
+  <div class="section">
+    <div class="card"><div class="tbl-wrap"><table>
+          <thead><tr>
+            <th>Date</th><th>Strategy</th><th>Trades</th>
+            <th>Gross P&amp;L</th><th>Broker Charges</th><th>Net P&amp;L</th>
+            <th>Win Rate</th><th>Winners</th><th>Losers</th>
+          </tr></thead>
+          <tbody><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">Bajaj Finance Strategy</td>
+              <td style="color:#8b949e">1</td>
+              <td style="color:#e6edf3">&#8377;50.0</td>
+              <td style="color:#fb8500">&#8377;60</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-10.0</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">BN ATM Strategy V1</td>
+              <td style="color:#8b949e">35</td>
+              <td style="color:#e6edf3">&#8377;1509.75</td>
+              <td style="color:#fb8500">&#8377;1400</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;109.75</td>
+              <td style="color:#f0b429">85.71%</td>
+              <td style="color:#3fb950">30</td>
+              <td style="color:#f85149">5</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2 (old)</td>
+              <td style="color:#8b949e">11</td>
+              <td style="color:#e6edf3">&#8377;114.0</td>
+              <td style="color:#fb8500">&#8377;440</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-326.0</td>
+              <td style="color:#f0b429">45.45%</td>
+              <td style="color:#3fb950">5</td>
+              <td style="color:#f85149">6</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">BN ATM Strategy Pro</td>
+              <td style="color:#8b949e">1</td>
+              <td style="color:#e6edf3">&#8377;-606.0</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-686.0</td>
+              <td style="color:#f0b429">0.0%</td>
+              <td style="color:#3fb950">0</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">BN Straddle V3</td>
+              <td style="color:#8b949e">6</td>
+              <td style="color:#e6edf3">&#8377;-14.25</td>
+              <td style="color:#fb8500">&#8377;240</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-254.25</td>
+              <td style="color:#f0b429">66.67%</td>
+              <td style="color:#3fb950">4</td>
+              <td style="color:#f85149">2</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">Nifty Bees Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;1938.75</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1938.75</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-05-25</td>
+              <td style="color:#58a6ff">Bajaj Finance Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;100.0</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;20.0</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">2</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-05-25</td>
+              <td style="color:#58a6ff">BN ATM Strategy V1</td>
+              <td style="color:#8b949e">24</td>
+              <td style="color:#e6edf3">&#8377;1746.0</td>
+              <td style="color:#fb8500">&#8377;960</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;786.0</td>
+              <td style="color:#f0b429">95.83%</td>
+              <td style="color:#3fb950">23</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-05-25</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2 (old)</td>
+              <td style="color:#8b949e">14</td>
+              <td style="color:#e6edf3">&#8377;-282.75</td>
+              <td style="color:#fb8500">&#8377;560</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-842.75</td>
+              <td style="color:#f0b429">35.71%</td>
+              <td style="color:#3fb950">5</td>
+              <td style="color:#f85149">9</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">BN ATM Strategy Pro</td>
+              <td style="color:#8b949e">1</td>
+              <td style="color:#e6edf3">&#8377;-606.0</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-686.0</td>
+              <td style="color:#f0b429">0.0%</td>
+              <td style="color:#3fb950">0</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-05-25</td>
+              <td style="color:#58a6ff">BN Straddle V3</td>
+              <td style="color:#8b949e">3</td>
+              <td style="color:#e6edf3">&#8377;-256.5</td>
+              <td style="color:#fb8500">&#8377;120</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-376.5</td>
+              <td style="color:#f0b429">66.67%</td>
+              <td style="color:#3fb950">2</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-05-25</td>
+              <td style="color:#58a6ff">BankNifty Trades</td>
+              <td style="color:#8b949e">3</td>
+              <td style="color:#e6edf3">&#8377;-199.5</td>
+              <td style="color:#fb8500">&#8377;120</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-319.5</td>
+              <td style="color:#f0b429">33.33%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">2</td>
+            </tr><tr>
+              <td>2026-05-25</td>
+              <td style="color:#58a6ff">Bnifty V3 Trades</td>
+              <td style="color:#8b949e">226</td>
+              <td style="color:#e6edf3">&#8377;544.5</td>
+              <td style="color:#fb8500">&#8377;9040</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-8495.5</td>
+              <td style="color:#f0b429">41.59%</td>
+              <td style="color:#3fb950">94</td>
+              <td style="color:#f85149">132</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">Nifty Bees Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;1938.75</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1938.75</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-05-26</td>
+              <td style="color:#58a6ff">Bajaj Finance Strategy</td>
+              <td style="color:#8b949e">7</td>
+              <td style="color:#e6edf3">&#8377;-5.0</td>
+              <td style="color:#fb8500">&#8377;240</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-245.0</td>
+              <td style="color:#f0b429">71.43%</td>
+              <td style="color:#3fb950">5</td>
+              <td style="color:#f85149">2</td>
+            </tr><tr>
+              <td>2026-05-26</td>
+              <td style="color:#58a6ff">BN ATM Strategy V1</td>
+              <td style="color:#8b949e">75</td>
+              <td style="color:#e6edf3">&#8377;-271.5</td>
+              <td style="color:#fb8500">&#8377;3000</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-3271.5</td>
+              <td style="color:#f0b429">76.0%</td>
+              <td style="color:#3fb950">57</td>
+              <td style="color:#f85149">18</td>
+            </tr><tr>
+              <td>2026-05-26</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2 (old)</td>
+              <td style="color:#8b949e">19</td>
+              <td style="color:#e6edf3">&#8377;484.5</td>
+              <td style="color:#fb8500">&#8377;760</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-275.5</td>
+              <td style="color:#f0b429">57.89%</td>
+              <td style="color:#3fb950">11</td>
+              <td style="color:#f85149">8</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">BN ATM Strategy Pro</td>
+              <td style="color:#8b949e">1</td>
+              <td style="color:#e6edf3">&#8377;-606.0</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-686.0</td>
+              <td style="color:#f0b429">0.0%</td>
+              <td style="color:#3fb950">0</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-05-26</td>
+              <td style="color:#58a6ff">BN ATM V1</td>
+              <td style="color:#8b949e">74</td>
+              <td style="color:#e6edf3">&#8377;2901.0</td>
+              <td style="color:#fb8500">&#8377;2960</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-59.0</td>
+              <td style="color:#f0b429">56.76%</td>
+              <td style="color:#3fb950">42</td>
+              <td style="color:#f85149">32</td>
+            </tr><tr>
+              <td>2026-05-26</td>
+              <td style="color:#58a6ff">BN ATM V2</td>
+              <td style="color:#8b949e">69</td>
+              <td style="color:#e6edf3">&#8377;1660.5</td>
+              <td style="color:#fb8500">&#8377;2760</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-1099.5</td>
+              <td style="color:#f0b429">44.93%</td>
+              <td style="color:#3fb950">31</td>
+              <td style="color:#f85149">38</td>
+            </tr><tr>
+              <td>2026-05-26</td>
+              <td style="color:#58a6ff">BN ATM V3</td>
+              <td style="color:#8b949e">72</td>
+              <td style="color:#e6edf3">&#8377;1386.0</td>
+              <td style="color:#fb8500">&#8377;2880</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-1494.0</td>
+              <td style="color:#f0b429">54.17%</td>
+              <td style="color:#3fb950">39</td>
+              <td style="color:#f85149">33</td>
+            </tr><tr>
+              <td>2026-05-26</td>
+              <td style="color:#58a6ff">BN Straddle V3</td>
+              <td style="color:#8b949e">6</td>
+              <td style="color:#e6edf3">&#8377;-114.75</td>
+              <td style="color:#fb8500">&#8377;240</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-354.75</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">3</td>
+              <td style="color:#f85149">3</td>
+            </tr><tr>
+              <td>2026-05-25</td>
+              <td style="color:#58a6ff">BankNifty Trades</td>
+              <td style="color:#8b949e">3</td>
+              <td style="color:#e6edf3">&#8377;-199.5</td>
+              <td style="color:#fb8500">&#8377;120</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-319.5</td>
+              <td style="color:#f0b429">33.33%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">2</td>
+            </tr><tr>
+              <td>2026-05-25</td>
+              <td style="color:#58a6ff">Bnifty V3 Trades</td>
+              <td style="color:#8b949e">226</td>
+              <td style="color:#e6edf3">&#8377;544.5</td>
+              <td style="color:#fb8500">&#8377;9040</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-8495.5</td>
+              <td style="color:#f0b429">41.59%</td>
+              <td style="color:#3fb950">94</td>
+              <td style="color:#f85149">132</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">Nifty Bees Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;1938.75</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1938.75</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-05-27</td>
+              <td style="color:#58a6ff">Bajaj Finance Strategy</td>
+              <td style="color:#8b949e">3</td>
+              <td style="color:#e6edf3">&#8377;-15.0</td>
+              <td style="color:#fb8500">&#8377;100</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-115.0</td>
+              <td style="color:#f0b429">66.67%</td>
+              <td style="color:#3fb950">2</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-05-27</td>
+              <td style="color:#58a6ff">BN ATM Strategy V1</td>
+              <td style="color:#8b949e">61</td>
+              <td style="color:#e6edf3">&#8377;2170.5</td>
+              <td style="color:#fb8500">&#8377;2460</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-289.5</td>
+              <td style="color:#f0b429">80.33%</td>
+              <td style="color:#3fb950">49</td>
+              <td style="color:#f85149">12</td>
+            </tr><tr>
+              <td>2026-05-27</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2 (old)</td>
+              <td style="color:#8b949e">6</td>
+              <td style="color:#e6edf3">&#8377;129.75</td>
+              <td style="color:#fb8500">&#8377;240</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-110.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">3</td>
+              <td style="color:#f85149">3</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">BN ATM Strategy Pro</td>
+              <td style="color:#8b949e">1</td>
+              <td style="color:#e6edf3">&#8377;-606.0</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-686.0</td>
+              <td style="color:#f0b429">0.0%</td>
+              <td style="color:#3fb950">0</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-05-27</td>
+              <td style="color:#58a6ff">BN ATM V1</td>
+              <td style="color:#8b949e">13</td>
+              <td style="color:#e6edf3">&#8377;-63.0</td>
+              <td style="color:#fb8500">&#8377;520</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-583.0</td>
+              <td style="color:#f0b429">46.15%</td>
+              <td style="color:#3fb950">6</td>
+              <td style="color:#f85149">7</td>
+            </tr><tr>
+              <td>2026-05-27</td>
+              <td style="color:#58a6ff">BN ATM V2</td>
+              <td style="color:#8b949e">56</td>
+              <td style="color:#e6edf3">&#8377;1143.0</td>
+              <td style="color:#fb8500">&#8377;2260</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-1117.0</td>
+              <td style="color:#f0b429">44.64%</td>
+              <td style="color:#3fb950">25</td>
+              <td style="color:#f85149">31</td>
+            </tr><tr>
+              <td>2026-05-27</td>
+              <td style="color:#58a6ff">BN ATM V3</td>
+              <td style="color:#8b949e">37</td>
+              <td style="color:#e6edf3">&#8377;-1099.5</td>
+              <td style="color:#fb8500">&#8377;1480</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-2579.5</td>
+              <td style="color:#f0b429">37.84%</td>
+              <td style="color:#3fb950">14</td>
+              <td style="color:#f85149">23</td>
+            </tr><tr>
+              <td>2026-05-27</td>
+              <td style="color:#58a6ff">BN ATM V4</td>
+              <td style="color:#8b949e">29</td>
+              <td style="color:#e6edf3">&#8377;2955.0</td>
+              <td style="color:#fb8500">&#8377;1160</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1795.0</td>
+              <td style="color:#f0b429">62.07%</td>
+              <td style="color:#3fb950">18</td>
+              <td style="color:#f85149">11</td>
+            </tr><tr>
+              <td>2026-05-27</td>
+              <td style="color:#58a6ff">BN Straddle V3</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;-37.5</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-117.5</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-05-25</td>
+              <td style="color:#58a6ff">BankNifty Trades</td>
+              <td style="color:#8b949e">3</td>
+              <td style="color:#e6edf3">&#8377;-199.5</td>
+              <td style="color:#fb8500">&#8377;120</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-319.5</td>
+              <td style="color:#f0b429">33.33%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">2</td>
+            </tr><tr>
+              <td>2026-05-25</td>
+              <td style="color:#58a6ff">Bnifty V3 Trades</td>
+              <td style="color:#8b949e">226</td>
+              <td style="color:#e6edf3">&#8377;544.5</td>
+              <td style="color:#fb8500">&#8377;9040</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-8495.5</td>
+              <td style="color:#f0b429">41.59%</td>
+              <td style="color:#3fb950">94</td>
+              <td style="color:#f85149">132</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">Nifty Bees Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;1938.75</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1938.75</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-05-29</td>
+              <td style="color:#58a6ff">Bajaj Finance Strategy</td>
+              <td style="color:#8b949e">0</td>
+              <td style="color:#e6edf3">&#8377;0.0</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;0.0</td>
+              <td style="color:#f0b429">0.0%</td>
+              <td style="color:#3fb950">0</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-05-29</td>
+              <td style="color:#58a6ff">BN ATM Strategy V1</td>
+              <td style="color:#8b949e">18</td>
+              <td style="color:#e6edf3">&#8377;1882.5</td>
+              <td style="color:#fb8500">&#8377;740</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1142.5</td>
+              <td style="color:#f0b429">83.33%</td>
+              <td style="color:#3fb950">15</td>
+              <td style="color:#f85149">3</td>
+            </tr><tr>
+              <td>2026-05-29</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2 (old)</td>
+              <td style="color:#8b949e">3</td>
+              <td style="color:#e6edf3">&#8377;-344.25</td>
+              <td style="color:#fb8500">&#8377;120</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-464.25</td>
+              <td style="color:#f0b429">0.0%</td>
+              <td style="color:#3fb950">0</td>
+              <td style="color:#f85149">3</td>
+            </tr><tr>
+              <td>2026-05-29</td>
+              <td style="color:#58a6ff">BN ATM V1</td>
+              <td style="color:#8b949e">15</td>
+              <td style="color:#e6edf3">&#8377;946.5</td>
+              <td style="color:#fb8500">&#8377;600</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;346.5</td>
+              <td style="color:#f0b429">53.33%</td>
+              <td style="color:#3fb950">8</td>
+              <td style="color:#f85149">7</td>
+            </tr><tr>
+              <td>2026-05-29</td>
+              <td style="color:#58a6ff">BN ATM V2</td>
+              <td style="color:#8b949e">16</td>
+              <td style="color:#e6edf3">&#8377;1408.5</td>
+              <td style="color:#fb8500">&#8377;640</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;768.5</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">8</td>
+              <td style="color:#f85149">8</td>
+            </tr><tr>
+              <td>2026-05-29</td>
+              <td style="color:#58a6ff">BN ATM V3</td>
+              <td style="color:#8b949e">14</td>
+              <td style="color:#e6edf3">&#8377;697.5</td>
+              <td style="color:#fb8500">&#8377;560</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;137.5</td>
+              <td style="color:#f0b429">57.14%</td>
+              <td style="color:#3fb950">8</td>
+              <td style="color:#f85149">6</td>
+            </tr><tr>
+              <td>2026-05-29</td>
+              <td style="color:#58a6ff">BN ATM V4</td>
+              <td style="color:#8b949e">12</td>
+              <td style="color:#e6edf3">&#8377;2683.5</td>
+              <td style="color:#fb8500">&#8377;480</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;2203.5</td>
+              <td style="color:#f0b429">66.67%</td>
+              <td style="color:#3fb950">8</td>
+              <td style="color:#f85149">4</td>
+            </tr><tr>
+              <td>2026-05-29</td>
+              <td style="color:#58a6ff">BN Straddle V3</td>
+              <td style="color:#8b949e">3</td>
+              <td style="color:#e6edf3">&#8377;-219.75</td>
+              <td style="color:#fb8500">&#8377;120</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-339.75</td>
+              <td style="color:#f0b429">33.33%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">2</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">Nifty Bees Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;1938.75</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1938.75</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-01</td>
+              <td style="color:#58a6ff">Bajaj Finance Strategy</td>
+              <td style="color:#8b949e">5</td>
+              <td style="color:#e6edf3">&#8377;82.5</td>
+              <td style="color:#fb8500">&#8377;180</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-97.5</td>
+              <td style="color:#f0b429">80.0%</td>
+              <td style="color:#3fb950">4</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-01</td>
+              <td style="color:#58a6ff">BN ATM Strategy V1</td>
+              <td style="color:#8b949e">49</td>
+              <td style="color:#e6edf3">&#8377;624.0</td>
+              <td style="color:#fb8500">&#8377;1960</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-1336.0</td>
+              <td style="color:#f0b429">71.43%</td>
+              <td style="color:#3fb950">35</td>
+              <td style="color:#f85149">14</td>
+            </tr><tr>
+              <td>2026-06-01</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2 (old)</td>
+              <td style="color:#8b949e">10</td>
+              <td style="color:#e6edf3">&#8377;-19.5</td>
+              <td style="color:#fb8500">&#8377;400</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-419.5</td>
+              <td style="color:#f0b429">40.0%</td>
+              <td style="color:#3fb950">4</td>
+              <td style="color:#f85149">6</td>
+            </tr><tr>
+              <td>2026-06-01</td>
+              <td style="color:#58a6ff">BN ATM V1</td>
+              <td style="color:#8b949e">73</td>
+              <td style="color:#e6edf3">&#8377;4179.0</td>
+              <td style="color:#fb8500">&#8377;2920</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1259.0</td>
+              <td style="color:#f0b429">54.79%</td>
+              <td style="color:#3fb950">40</td>
+              <td style="color:#f85149">33</td>
+            </tr><tr>
+              <td>2026-06-01</td>
+              <td style="color:#58a6ff">BN ATM V2</td>
+              <td style="color:#8b949e">50</td>
+              <td style="color:#e6edf3">&#8377;1161.0</td>
+              <td style="color:#fb8500">&#8377;2000</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-839.0</td>
+              <td style="color:#f0b429">44.0%</td>
+              <td style="color:#3fb950">22</td>
+              <td style="color:#f85149">28</td>
+            </tr><tr>
+              <td>2026-06-01</td>
+              <td style="color:#58a6ff">BN ATM V3</td>
+              <td style="color:#8b949e">46</td>
+              <td style="color:#e6edf3">&#8377;2440.5</td>
+              <td style="color:#fb8500">&#8377;1840</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;600.5</td>
+              <td style="color:#f0b429">47.83%</td>
+              <td style="color:#3fb950">22</td>
+              <td style="color:#f85149">24</td>
+            </tr><tr>
+              <td>2026-06-01</td>
+              <td style="color:#58a6ff">BN ATM V4</td>
+              <td style="color:#8b949e">34</td>
+              <td style="color:#e6edf3">&#8377;1740.0</td>
+              <td style="color:#fb8500">&#8377;1360</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;380.0</td>
+              <td style="color:#f0b429">52.94%</td>
+              <td style="color:#3fb950">18</td>
+              <td style="color:#f85149">16</td>
+            </tr><tr>
+              <td>2026-06-01</td>
+              <td style="color:#58a6ff">BN Straddle V3</td>
+              <td style="color:#8b949e">6</td>
+              <td style="color:#e6edf3">&#8377;759.75</td>
+              <td style="color:#fb8500">&#8377;240</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;519.75</td>
+              <td style="color:#f0b429">66.67%</td>
+              <td style="color:#3fb950">4</td>
+              <td style="color:#f85149">2</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">Nifty Bees Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;1938.75</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1938.75</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-01</td>
+              <td style="color:#58a6ff">Bajaj Finance Strategy</td>
+              <td style="color:#8b949e">5</td>
+              <td style="color:#e6edf3">&#8377;82.5</td>
+              <td style="color:#fb8500">&#8377;180</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-97.5</td>
+              <td style="color:#f0b429">80.0%</td>
+              <td style="color:#3fb950">4</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-02</td>
+              <td style="color:#58a6ff">BN ATM Strategy V1</td>
+              <td style="color:#8b949e">38</td>
+              <td style="color:#e6edf3">&#8377;1807.5</td>
+              <td style="color:#fb8500">&#8377;1520</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;287.5</td>
+              <td style="color:#f0b429">81.58%</td>
+              <td style="color:#3fb950">31</td>
+              <td style="color:#f85149">7</td>
+            </tr><tr>
+              <td>2026-06-02</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2 (old)</td>
+              <td style="color:#8b949e">3</td>
+              <td style="color:#e6edf3">&#8377;-92.25</td>
+              <td style="color:#fb8500">&#8377;120</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-212.25</td>
+              <td style="color:#f0b429">33.33%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">2</td>
+            </tr><tr>
+              <td>2026-06-02</td>
+              <td style="color:#58a6ff">BN ATM V1</td>
+              <td style="color:#8b949e">34</td>
+              <td style="color:#e6edf3">&#8377;1080.0</td>
+              <td style="color:#fb8500">&#8377;1360</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-280.0</td>
+              <td style="color:#f0b429">52.94%</td>
+              <td style="color:#3fb950">18</td>
+              <td style="color:#f85149">16</td>
+            </tr><tr>
+              <td>2026-06-02</td>
+              <td style="color:#58a6ff">BN ATM V2</td>
+              <td style="color:#8b949e">54</td>
+              <td style="color:#e6edf3">&#8377;-2784.0</td>
+              <td style="color:#fb8500">&#8377;2160</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-4944.0</td>
+              <td style="color:#f0b429">35.19%</td>
+              <td style="color:#3fb950">19</td>
+              <td style="color:#f85149">35</td>
+            </tr><tr>
+              <td>2026-06-02</td>
+              <td style="color:#58a6ff">BN ATM V3</td>
+              <td style="color:#8b949e">22</td>
+              <td style="color:#e6edf3">&#8377;600.0</td>
+              <td style="color:#fb8500">&#8377;880</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-280.0</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">11</td>
+              <td style="color:#f85149">11</td>
+            </tr><tr>
+              <td>2026-06-02</td>
+              <td style="color:#58a6ff">BN ATM V4</td>
+              <td style="color:#8b949e">16</td>
+              <td style="color:#e6edf3">&#8377;40.5</td>
+              <td style="color:#fb8500">&#8377;640</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-599.5</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">8</td>
+              <td style="color:#f85149">8</td>
+            </tr><tr>
+              <td>2026-06-02</td>
+              <td style="color:#58a6ff">BN Straddle V3</td>
+              <td style="color:#8b949e">1</td>
+              <td style="color:#e6edf3">&#8377;-186.75</td>
+              <td style="color:#fb8500">&#8377;60</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-246.75</td>
+              <td style="color:#f0b429">0.0%</td>
+              <td style="color:#3fb950">0</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">Nifty Bees Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;1938.75</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1938.75</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">Bajaj Finance Strategy</td>
+              <td style="color:#8b949e">7</td>
+              <td style="color:#e6edf3">&#8377;380.0</td>
+              <td style="color:#fb8500">&#8377;300</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;80.0</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">7</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN ATM Strategy V1</td>
+              <td style="color:#8b949e">137</td>
+              <td style="color:#e6edf3">&#8377;8791.5</td>
+              <td style="color:#fb8500">&#8377;5480</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;3311.5</td>
+              <td style="color:#f0b429">79.56%</td>
+              <td style="color:#3fb950">109</td>
+              <td style="color:#f85149">28</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2 (old)</td>
+              <td style="color:#8b949e">10</td>
+              <td style="color:#e6edf3">&#8377;279.75</td>
+              <td style="color:#fb8500">&#8377;400</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-120.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">5</td>
+              <td style="color:#f85149">5</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN ATM V1</td>
+              <td style="color:#8b949e">143</td>
+              <td style="color:#e6edf3">&#8377;5131.5</td>
+              <td style="color:#fb8500">&#8377;5720</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-588.5</td>
+              <td style="color:#f0b429">54.55%</td>
+              <td style="color:#3fb950">78</td>
+              <td style="color:#f85149">65</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN ATM V2</td>
+              <td style="color:#8b949e">126</td>
+              <td style="color:#e6edf3">&#8377;4177.5</td>
+              <td style="color:#fb8500">&#8377;5040</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-862.5</td>
+              <td style="color:#f0b429">46.03%</td>
+              <td style="color:#3fb950">58</td>
+              <td style="color:#f85149">68</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN ATM V3</td>
+              <td style="color:#8b949e">118</td>
+              <td style="color:#e6edf3">&#8377;8274.0</td>
+              <td style="color:#fb8500">&#8377;4720</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;3554.0</td>
+              <td style="color:#f0b429">57.63%</td>
+              <td style="color:#3fb950">68</td>
+              <td style="color:#f85149">50</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN ATM V4</td>
+              <td style="color:#8b949e">81</td>
+              <td style="color:#e6edf3">&#8377;6186.0</td>
+              <td style="color:#fb8500">&#8377;3240</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;2946.0</td>
+              <td style="color:#f0b429">59.26%</td>
+              <td style="color:#3fb950">48</td>
+              <td style="color:#f85149">33</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN ATM V5</td>
+              <td style="color:#8b949e">153</td>
+              <td style="color:#e6edf3">&#8377;4942.5</td>
+              <td style="color:#fb8500">&#8377;6120</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-1177.5</td>
+              <td style="color:#f0b429">54.25%</td>
+              <td style="color:#3fb950">83</td>
+              <td style="color:#f85149">70</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN Straddle V3</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;-113.25</td>
+              <td style="color:#fb8500">&#8377;100</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-213.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BankNifty Trades</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;700.5</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;620.5</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">2</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">Nifty Bees Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;1938.75</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1938.75</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-04</td>
+              <td style="color:#58a6ff">Bajaj Finance Strategy</td>
+              <td style="color:#8b949e">5</td>
+              <td style="color:#e6edf3">&#8377;255.0</td>
+              <td style="color:#fb8500">&#8377;200</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;55.0</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">5</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-04</td>
+              <td style="color:#58a6ff">BN ATM Strategy V1</td>
+              <td style="color:#8b949e">104</td>
+              <td style="color:#e6edf3">&#8377;4989.0</td>
+              <td style="color:#fb8500">&#8377;4160</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;829.0</td>
+              <td style="color:#f0b429">81.73%</td>
+              <td style="color:#3fb950">85</td>
+              <td style="color:#f85149">19</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2 (old)</td>
+              <td style="color:#8b949e">10</td>
+              <td style="color:#e6edf3">&#8377;279.75</td>
+              <td style="color:#fb8500">&#8377;400</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-120.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">5</td>
+              <td style="color:#f85149">5</td>
+            </tr><tr>
+              <td>2026-06-04</td>
+              <td style="color:#58a6ff">BN ATM V1</td>
+              <td style="color:#8b949e">131</td>
+              <td style="color:#e6edf3">&#8377;3411.0</td>
+              <td style="color:#fb8500">&#8377;5240</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-1829.0</td>
+              <td style="color:#f0b429">51.91%</td>
+              <td style="color:#3fb950">68</td>
+              <td style="color:#f85149">63</td>
+            </tr><tr>
+              <td>2026-06-04</td>
+              <td style="color:#58a6ff">BN ATM V2</td>
+              <td style="color:#8b949e">124</td>
+              <td style="color:#e6edf3">&#8377;9136.5</td>
+              <td style="color:#fb8500">&#8377;4960</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;4176.5</td>
+              <td style="color:#f0b429">49.19%</td>
+              <td style="color:#3fb950">61</td>
+              <td style="color:#f85149">63</td>
+            </tr><tr>
+              <td>2026-06-04</td>
+              <td style="color:#58a6ff">BN ATM V3</td>
+              <td style="color:#8b949e">67</td>
+              <td style="color:#e6edf3">&#8377;4134.0</td>
+              <td style="color:#fb8500">&#8377;2680</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1454.0</td>
+              <td style="color:#f0b429">55.22%</td>
+              <td style="color:#3fb950">37</td>
+              <td style="color:#f85149">30</td>
+            </tr><tr>
+              <td>2026-06-04</td>
+              <td style="color:#58a6ff">BN ATM V4</td>
+              <td style="color:#8b949e">61</td>
+              <td style="color:#e6edf3">&#8377;6343.5</td>
+              <td style="color:#fb8500">&#8377;2440</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;3903.5</td>
+              <td style="color:#f0b429">62.3%</td>
+              <td style="color:#3fb950">38</td>
+              <td style="color:#f85149">23</td>
+            </tr><tr>
+              <td>2026-06-04</td>
+              <td style="color:#58a6ff">BN ATM V5</td>
+              <td style="color:#8b949e">19</td>
+              <td style="color:#e6edf3">&#8377;-28.5</td>
+              <td style="color:#fb8500">&#8377;760</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-788.5</td>
+              <td style="color:#f0b429">47.37%</td>
+              <td style="color:#3fb950">9</td>
+              <td style="color:#f85149">10</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN Straddle V3</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;-113.25</td>
+              <td style="color:#fb8500">&#8377;100</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-213.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BankNifty Trades</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;700.5</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;620.5</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">2</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">Nifty Bees Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;1938.75</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1938.75</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-05</td>
+              <td style="color:#58a6ff">Bajaj Finance Strategy</td>
+              <td style="color:#8b949e">12</td>
+              <td style="color:#e6edf3">&#8377;-113.75</td>
+              <td style="color:#fb8500">&#8377;420</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-533.75</td>
+              <td style="color:#f0b429">66.67%</td>
+              <td style="color:#3fb950">8</td>
+              <td style="color:#f85149">4</td>
+            </tr><tr>
+              <td>2026-06-05</td>
+              <td style="color:#58a6ff">BN ATM Strategy V1</td>
+              <td style="color:#8b949e">194</td>
+              <td style="color:#e6edf3">&#8377;1837.5</td>
+              <td style="color:#fb8500">&#8377;7760</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-5922.5</td>
+              <td style="color:#f0b429">75.77%</td>
+              <td style="color:#3fb950">147</td>
+              <td style="color:#f85149">47</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2 (old)</td>
+              <td style="color:#8b949e">10</td>
+              <td style="color:#e6edf3">&#8377;279.75</td>
+              <td style="color:#fb8500">&#8377;400</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-120.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">5</td>
+              <td style="color:#f85149">5</td>
+            </tr><tr>
+              <td>2026-06-05</td>
+              <td style="color:#58a6ff">BN ATM V1</td>
+              <td style="color:#8b949e">213</td>
+              <td style="color:#e6edf3">&#8377;-1515.0</td>
+              <td style="color:#fb8500">&#8377;8520</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-10035.0</td>
+              <td style="color:#f0b429">48.83%</td>
+              <td style="color:#3fb950">104</td>
+              <td style="color:#f85149">109</td>
+            </tr><tr>
+              <td>2026-06-04</td>
+              <td style="color:#58a6ff">BN ATM V2</td>
+              <td style="color:#8b949e">124</td>
+              <td style="color:#e6edf3">&#8377;9136.5</td>
+              <td style="color:#fb8500">&#8377;4960</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;4176.5</td>
+              <td style="color:#f0b429">49.19%</td>
+              <td style="color:#3fb950">61</td>
+              <td style="color:#f85149">63</td>
+            </tr><tr>
+              <td>2026-06-05</td>
+              <td style="color:#58a6ff">BN ATM V3</td>
+              <td style="color:#8b949e">173</td>
+              <td style="color:#e6edf3">&#8377;-2713.5</td>
+              <td style="color:#fb8500">&#8377;6920</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-9633.5</td>
+              <td style="color:#f0b429">42.2%</td>
+              <td style="color:#3fb950">73</td>
+              <td style="color:#f85149">100</td>
+            </tr><tr>
+              <td>2026-06-05</td>
+              <td style="color:#58a6ff">BN ATM V4</td>
+              <td style="color:#8b949e">108</td>
+              <td style="color:#e6edf3">&#8377;-3718.5</td>
+              <td style="color:#fb8500">&#8377;4320</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-8038.5</td>
+              <td style="color:#f0b429">45.37%</td>
+              <td style="color:#3fb950">49</td>
+              <td style="color:#f85149">59</td>
+            </tr><tr>
+              <td>2026-06-05</td>
+              <td style="color:#58a6ff">BN ATM V5</td>
+              <td style="color:#8b949e">89</td>
+              <td style="color:#e6edf3">&#8377;-3309.0</td>
+              <td style="color:#fb8500">&#8377;3560</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-6869.0</td>
+              <td style="color:#f0b429">46.07%</td>
+              <td style="color:#3fb950">41</td>
+              <td style="color:#f85149">48</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN Straddle V3</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;-113.25</td>
+              <td style="color:#fb8500">&#8377;100</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-213.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BankNifty Trades</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;700.5</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;620.5</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">2</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">Nifty Bees Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;1938.75</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1938.75</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-08</td>
+              <td style="color:#58a6ff">Bajaj Finance Strategy</td>
+              <td style="color:#8b949e">4</td>
+              <td style="color:#e6edf3">&#8377;203.75</td>
+              <td style="color:#fb8500">&#8377;160</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;43.75</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">4</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-08</td>
+              <td style="color:#58a6ff">BN ATM Strategy V1</td>
+              <td style="color:#8b949e">106</td>
+              <td style="color:#e6edf3">&#8377;5284.5</td>
+              <td style="color:#fb8500">&#8377;4240</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1044.5</td>
+              <td style="color:#f0b429">81.13%</td>
+              <td style="color:#3fb950">86</td>
+              <td style="color:#f85149">20</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2 (old)</td>
+              <td style="color:#8b949e">10</td>
+              <td style="color:#e6edf3">&#8377;279.75</td>
+              <td style="color:#fb8500">&#8377;400</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-120.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">5</td>
+              <td style="color:#f85149">5</td>
+            </tr><tr>
+              <td>2026-06-08</td>
+              <td style="color:#58a6ff">BN ATM V1</td>
+              <td style="color:#8b949e">110</td>
+              <td style="color:#e6edf3">&#8377;972.0</td>
+              <td style="color:#fb8500">&#8377;4400</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-3428.0</td>
+              <td style="color:#f0b429">50.91%</td>
+              <td style="color:#3fb950">56</td>
+              <td style="color:#f85149">54</td>
+            </tr><tr>
+              <td>2026-06-08</td>
+              <td style="color:#58a6ff">BN ATM V2</td>
+              <td style="color:#8b949e">105</td>
+              <td style="color:#e6edf3">&#8377;4228.5</td>
+              <td style="color:#fb8500">&#8377;4200</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;28.5</td>
+              <td style="color:#f0b429">45.71%</td>
+              <td style="color:#3fb950">48</td>
+              <td style="color:#f85149">57</td>
+            </tr><tr>
+              <td>2026-06-08</td>
+              <td style="color:#58a6ff">BN ATM V3</td>
+              <td style="color:#8b949e">103</td>
+              <td style="color:#e6edf3">&#8377;3373.5</td>
+              <td style="color:#fb8500">&#8377;4120</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-746.5</td>
+              <td style="color:#f0b429">55.34%</td>
+              <td style="color:#3fb950">57</td>
+              <td style="color:#f85149">46</td>
+            </tr><tr>
+              <td>2026-06-08</td>
+              <td style="color:#58a6ff">BN ATM V4</td>
+              <td style="color:#8b949e">58</td>
+              <td style="color:#e6edf3">&#8377;1537.5</td>
+              <td style="color:#fb8500">&#8377;2320</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-782.5</td>
+              <td style="color:#f0b429">51.72%</td>
+              <td style="color:#3fb950">30</td>
+              <td style="color:#f85149">28</td>
+            </tr><tr>
+              <td>2026-06-08</td>
+              <td style="color:#58a6ff">BN ATM V5</td>
+              <td style="color:#8b949e">5</td>
+              <td style="color:#e6edf3">&#8377;-1050.0</td>
+              <td style="color:#fb8500">&#8377;200</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-1250.0</td>
+              <td style="color:#f0b429">20.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">4</td>
+            </tr><tr>
+              <td>2026-06-08</td>
+              <td style="color:#58a6ff">BN ATM V6</td>
+              <td style="color:#8b949e">16</td>
+              <td style="color:#e6edf3">&#8377;2065.5</td>
+              <td style="color:#fb8500">&#8377;640</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1425.5</td>
+              <td style="color:#f0b429">68.75%</td>
+              <td style="color:#3fb950">11</td>
+              <td style="color:#f85149">5</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN Straddle V3</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;-113.25</td>
+              <td style="color:#fb8500">&#8377;100</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-213.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BankNifty Trades</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;700.5</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;620.5</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">2</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">Nifty Bees Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;1938.75</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1938.75</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-08</td>
+              <td style="color:#58a6ff">Bajaj Finance Strategy</td>
+              <td style="color:#8b949e">4</td>
+              <td style="color:#e6edf3">&#8377;203.75</td>
+              <td style="color:#fb8500">&#8377;160</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;43.75</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">4</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-09</td>
+              <td style="color:#58a6ff">BN ATM Strategy V1</td>
+              <td style="color:#8b949e">26</td>
+              <td style="color:#e6edf3">&#8377;829.5</td>
+              <td style="color:#fb8500">&#8377;1040</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-210.5</td>
+              <td style="color:#f0b429">76.92%</td>
+              <td style="color:#3fb950">20</td>
+              <td style="color:#f85149">6</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2 (old)</td>
+              <td style="color:#8b949e">10</td>
+              <td style="color:#e6edf3">&#8377;279.75</td>
+              <td style="color:#fb8500">&#8377;400</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-120.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">5</td>
+              <td style="color:#f85149">5</td>
+            </tr><tr>
+              <td>2026-06-09</td>
+              <td style="color:#58a6ff">BN ATM V1</td>
+              <td style="color:#8b949e">38</td>
+              <td style="color:#e6edf3">&#8377;-18.0</td>
+              <td style="color:#fb8500">&#8377;1520</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-1538.0</td>
+              <td style="color:#f0b429">52.63%</td>
+              <td style="color:#3fb950">20</td>
+              <td style="color:#f85149">18</td>
+            </tr><tr>
+              <td>2026-06-09</td>
+              <td style="color:#58a6ff">BN ATM V2</td>
+              <td style="color:#8b949e">43</td>
+              <td style="color:#e6edf3">&#8377;-543.0</td>
+              <td style="color:#fb8500">&#8377;1720</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-2263.0</td>
+              <td style="color:#f0b429">39.53%</td>
+              <td style="color:#3fb950">17</td>
+              <td style="color:#f85149">26</td>
+            </tr><tr>
+              <td>2026-06-09</td>
+              <td style="color:#58a6ff">BN ATM V3</td>
+              <td style="color:#8b949e">30</td>
+              <td style="color:#e6edf3">&#8377;-1348.5</td>
+              <td style="color:#fb8500">&#8377;1200</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-2548.5</td>
+              <td style="color:#f0b429">43.33%</td>
+              <td style="color:#3fb950">13</td>
+              <td style="color:#f85149">17</td>
+            </tr><tr>
+              <td>2026-06-09</td>
+              <td style="color:#58a6ff">BN ATM V4</td>
+              <td style="color:#8b949e">22</td>
+              <td style="color:#e6edf3">&#8377;-1437.0</td>
+              <td style="color:#fb8500">&#8377;880</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-2317.0</td>
+              <td style="color:#f0b429">40.91%</td>
+              <td style="color:#3fb950">9</td>
+              <td style="color:#f85149">13</td>
+            </tr><tr>
+              <td>2026-06-09</td>
+              <td style="color:#58a6ff">BN ATM V5</td>
+              <td style="color:#8b949e">5</td>
+              <td style="color:#e6edf3">&#8377;-945.0</td>
+              <td style="color:#fb8500">&#8377;200</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-1145.0</td>
+              <td style="color:#f0b429">20.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">4</td>
+            </tr><tr>
+              <td>2026-06-09</td>
+              <td style="color:#58a6ff">BN ATM V6</td>
+              <td style="color:#8b949e">9</td>
+              <td style="color:#e6edf3">&#8377;-1809.0</td>
+              <td style="color:#fb8500">&#8377;360</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-2169.0</td>
+              <td style="color:#f0b429">33.33%</td>
+              <td style="color:#3fb950">3</td>
+              <td style="color:#f85149">6</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN Straddle V3</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;-113.25</td>
+              <td style="color:#fb8500">&#8377;100</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-213.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BankNifty Trades</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;700.5</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;620.5</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">2</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">Nifty Bees Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;1938.75</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1938.75</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-10</td>
+              <td style="color:#58a6ff">Bajaj Finance Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;-75.0</td>
+              <td style="color:#fb8500">&#8377;60</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-135.0</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-10</td>
+              <td style="color:#58a6ff">BN ATM Strategy V1</td>
+              <td style="color:#8b949e">51</td>
+              <td style="color:#e6edf3">&#8377;6172.5</td>
+              <td style="color:#fb8500">&#8377;2040</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;4132.5</td>
+              <td style="color:#f0b429">90.2%</td>
+              <td style="color:#3fb950">46</td>
+              <td style="color:#f85149">5</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2 (old)</td>
+              <td style="color:#8b949e">10</td>
+              <td style="color:#e6edf3">&#8377;279.75</td>
+              <td style="color:#fb8500">&#8377;400</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-120.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">5</td>
+              <td style="color:#f85149">5</td>
+            </tr><tr>
+              <td>2026-06-10</td>
+              <td style="color:#58a6ff">BN ATM V1</td>
+              <td style="color:#8b949e">48</td>
+              <td style="color:#e6edf3">&#8377;4237.5</td>
+              <td style="color:#fb8500">&#8377;1920</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;2317.5</td>
+              <td style="color:#f0b429">62.5%</td>
+              <td style="color:#3fb950">30</td>
+              <td style="color:#f85149">18</td>
+            </tr><tr>
+              <td>2026-06-10</td>
+              <td style="color:#58a6ff">BN ATM V2</td>
+              <td style="color:#8b949e">38</td>
+              <td style="color:#e6edf3">&#8377;1819.5</td>
+              <td style="color:#fb8500">&#8377;1520</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;299.5</td>
+              <td style="color:#f0b429">47.37%</td>
+              <td style="color:#3fb950">18</td>
+              <td style="color:#f85149">20</td>
+            </tr><tr>
+              <td>2026-06-10</td>
+              <td style="color:#58a6ff">BN ATM V3</td>
+              <td style="color:#8b949e">34</td>
+              <td style="color:#e6edf3">&#8377;1542.0</td>
+              <td style="color:#fb8500">&#8377;1360</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;182.0</td>
+              <td style="color:#f0b429">61.76%</td>
+              <td style="color:#3fb950">21</td>
+              <td style="color:#f85149">13</td>
+            </tr><tr>
+              <td>2026-06-10</td>
+              <td style="color:#58a6ff">BN ATM V4</td>
+              <td style="color:#8b949e">19</td>
+              <td style="color:#e6edf3">&#8377;3198.0</td>
+              <td style="color:#fb8500">&#8377;760</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;2438.0</td>
+              <td style="color:#f0b429">73.68%</td>
+              <td style="color:#3fb950">14</td>
+              <td style="color:#f85149">5</td>
+            </tr><tr>
+              <td>2026-06-10</td>
+              <td style="color:#58a6ff">BN ATM V5</td>
+              <td style="color:#8b949e">13</td>
+              <td style="color:#e6edf3">&#8377;2602.5</td>
+              <td style="color:#fb8500">&#8377;520</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;2082.5</td>
+              <td style="color:#f0b429">76.92%</td>
+              <td style="color:#3fb950">10</td>
+              <td style="color:#f85149">3</td>
+            </tr><tr>
+              <td>2026-06-10</td>
+              <td style="color:#58a6ff">BN ATM V6</td>
+              <td style="color:#8b949e">3</td>
+              <td style="color:#e6edf3">&#8377;970.5</td>
+              <td style="color:#fb8500">&#8377;120</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;850.5</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">3</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN Straddle V3</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;-113.25</td>
+              <td style="color:#fb8500">&#8377;100</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-213.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BankNifty Trades</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;700.5</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;620.5</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">2</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-10</td>
+              <td style="color:#58a6ff">Nifty50 ATM V6</td>
+              <td style="color:#8b949e">55</td>
+              <td style="color:#e6edf3">&#8377;1612.0</td>
+              <td style="color:#fb8500">&#8377;2200</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-588.0</td>
+              <td style="color:#f0b429">63.64%</td>
+              <td style="color:#3fb950">35</td>
+              <td style="color:#f85149">20</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">Nifty Bees Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;1938.75</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1938.75</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-11</td>
+              <td style="color:#58a6ff">Bajaj Finance Strategy</td>
+              <td style="color:#8b949e">1</td>
+              <td style="color:#e6edf3">&#8377;66.25</td>
+              <td style="color:#fb8500">&#8377;60</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;6.25</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-10</td>
+              <td style="color:#58a6ff">BN ATM Strategy V1</td>
+              <td style="color:#8b949e">51</td>
+              <td style="color:#e6edf3">&#8377;6172.5</td>
+              <td style="color:#fb8500">&#8377;2040</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;4132.5</td>
+              <td style="color:#f0b429">90.2%</td>
+              <td style="color:#3fb950">46</td>
+              <td style="color:#f85149">5</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2 (old)</td>
+              <td style="color:#8b949e">10</td>
+              <td style="color:#e6edf3">&#8377;279.75</td>
+              <td style="color:#fb8500">&#8377;400</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-120.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">5</td>
+              <td style="color:#f85149">5</td>
+            </tr><tr>
+              <td>2026-06-11</td>
+              <td style="color:#58a6ff">BN ATM V1</td>
+              <td style="color:#8b949e">28</td>
+              <td style="color:#e6edf3">&#8377;-1386.0</td>
+              <td style="color:#fb8500">&#8377;1120</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-2506.0</td>
+              <td style="color:#f0b429">42.86%</td>
+              <td style="color:#3fb950">12</td>
+              <td style="color:#f85149">16</td>
+            </tr><tr>
+              <td>2026-06-11</td>
+              <td style="color:#58a6ff">BN ATM V2</td>
+              <td style="color:#8b949e">26</td>
+              <td style="color:#e6edf3">&#8377;-1123.5</td>
+              <td style="color:#fb8500">&#8377;1040</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-2163.5</td>
+              <td style="color:#f0b429">34.62%</td>
+              <td style="color:#3fb950">9</td>
+              <td style="color:#f85149">17</td>
+            </tr><tr>
+              <td>2026-06-11</td>
+              <td style="color:#58a6ff">BN ATM V3</td>
+              <td style="color:#8b949e">5</td>
+              <td style="color:#e6edf3">&#8377;2007.0</td>
+              <td style="color:#fb8500">&#8377;200</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1807.0</td>
+              <td style="color:#f0b429">80.0%</td>
+              <td style="color:#3fb950">4</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-11</td>
+              <td style="color:#58a6ff">BN ATM V4</td>
+              <td style="color:#8b949e">16</td>
+              <td style="color:#e6edf3">&#8377;-1228.5</td>
+              <td style="color:#fb8500">&#8377;640</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-1868.5</td>
+              <td style="color:#f0b429">37.5%</td>
+              <td style="color:#3fb950">6</td>
+              <td style="color:#f85149">10</td>
+            </tr><tr>
+              <td>2026-06-11</td>
+              <td style="color:#58a6ff">BN ATM V5</td>
+              <td style="color:#8b949e">1</td>
+              <td style="color:#e6edf3">&#8377;1158.0</td>
+              <td style="color:#fb8500">&#8377;40</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1118.0</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-10</td>
+              <td style="color:#58a6ff">BN ATM V6</td>
+              <td style="color:#8b949e">3</td>
+              <td style="color:#e6edf3">&#8377;970.5</td>
+              <td style="color:#fb8500">&#8377;120</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;850.5</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">3</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN Straddle V3</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;-113.25</td>
+              <td style="color:#fb8500">&#8377;100</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-213.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BankNifty Trades</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;700.5</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;620.5</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">2</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-11</td>
+              <td style="color:#58a6ff">Nifty50 ATM V6</td>
+              <td style="color:#8b949e">32</td>
+              <td style="color:#e6edf3">&#8377;-3220.75</td>
+              <td style="color:#fb8500">&#8377;1280</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-4500.75</td>
+              <td style="color:#f0b429">40.62%</td>
+              <td style="color:#3fb950">13</td>
+              <td style="color:#f85149">19</td>
+            </tr><tr>
+              <td>2026-06-11</td>
+              <td style="color:#58a6ff">Nifty50 ATM V7</td>
+              <td style="color:#8b949e">5</td>
+              <td style="color:#e6edf3">&#8377;-477.75</td>
+              <td style="color:#fb8500">&#8377;200</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-677.75</td>
+              <td style="color:#f0b429">40.0%</td>
+              <td style="color:#3fb950">2</td>
+              <td style="color:#f85149">3</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">Nifty Bees Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;1938.75</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1938.75</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-12</td>
+              <td style="color:#58a6ff">Bajaj Finance Strategy</td>
+              <td style="color:#8b949e">0</td>
+              <td style="color:#e6edf3">&#8377;0.0</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;0.0</td>
+              <td style="color:#f0b429">0.0%</td>
+              <td style="color:#3fb950">0</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-12</td>
+              <td style="color:#58a6ff">BN ATM Strategy V1</td>
+              <td style="color:#8b949e">36</td>
+              <td style="color:#e6edf3">&#8377;3714.0</td>
+              <td style="color:#fb8500">&#8377;1440</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;2274.0</td>
+              <td style="color:#f0b429">86.11%</td>
+              <td style="color:#3fb950">31</td>
+              <td style="color:#f85149">5</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2 (old)</td>
+              <td style="color:#8b949e">10</td>
+              <td style="color:#e6edf3">&#8377;279.75</td>
+              <td style="color:#fb8500">&#8377;400</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-120.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">5</td>
+              <td style="color:#f85149">5</td>
+            </tr><tr>
+              <td>2026-06-12</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;348.0</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;268.0</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">2</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-12</td>
+              <td style="color:#58a6ff">BN ATM Strategy V7</td>
+              <td style="color:#8b949e">11</td>
+              <td style="color:#e6edf3">&#8377;1110.0</td>
+              <td style="color:#fb8500">&#8377;440</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;670.0</td>
+              <td style="color:#f0b429">90.91%</td>
+              <td style="color:#3fb950">10</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-12</td>
+              <td style="color:#58a6ff">BN ATM V1</td>
+              <td style="color:#8b949e">11</td>
+              <td style="color:#e6edf3">&#8377;2343.0</td>
+              <td style="color:#fb8500">&#8377;440</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1903.0</td>
+              <td style="color:#f0b429">81.82%</td>
+              <td style="color:#3fb950">9</td>
+              <td style="color:#f85149">2</td>
+            </tr><tr>
+              <td>2026-06-12</td>
+              <td style="color:#58a6ff">BN ATM V2</td>
+              <td style="color:#8b949e">10</td>
+              <td style="color:#e6edf3">&#8377;2247.0</td>
+              <td style="color:#fb8500">&#8377;400</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1847.0</td>
+              <td style="color:#f0b429">70.0%</td>
+              <td style="color:#3fb950">7</td>
+              <td style="color:#f85149">3</td>
+            </tr><tr>
+              <td>2026-06-12</td>
+              <td style="color:#58a6ff">BN ATM V3</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;91.5</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;11.5</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-12</td>
+              <td style="color:#58a6ff">BN ATM V4</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;46.5</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-33.5</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-11</td>
+              <td style="color:#58a6ff">BN ATM V5</td>
+              <td style="color:#8b949e">1</td>
+              <td style="color:#e6edf3">&#8377;1158.0</td>
+              <td style="color:#fb8500">&#8377;40</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1118.0</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-10</td>
+              <td style="color:#58a6ff">BN ATM V6</td>
+              <td style="color:#8b949e">3</td>
+              <td style="color:#e6edf3">&#8377;970.5</td>
+              <td style="color:#fb8500">&#8377;120</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;850.5</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">3</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-12</td>
+              <td style="color:#58a6ff">BN LTQ Pure V1</td>
+              <td style="color:#8b949e">7</td>
+              <td style="color:#e6edf3">&#8377;198.0</td>
+              <td style="color:#fb8500">&#8377;280</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-82.0</td>
+              <td style="color:#f0b429">42.86%</td>
+              <td style="color:#3fb950">3</td>
+              <td style="color:#f85149">4</td>
+            </tr><tr>
+              <td>2026-06-12</td>
+              <td style="color:#58a6ff">BN LTQ Strategy V1</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;-69.0</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-149.0</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN Straddle V3</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;-113.25</td>
+              <td style="color:#fb8500">&#8377;100</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-213.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BankNifty Trades</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;700.5</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;620.5</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">2</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-12</td>
+              <td style="color:#58a6ff">Nifty50 ATM V6</td>
+              <td style="color:#8b949e">3</td>
+              <td style="color:#e6edf3">&#8377;162.5</td>
+              <td style="color:#fb8500">&#8377;120</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;42.5</td>
+              <td style="color:#f0b429">66.67%</td>
+              <td style="color:#3fb950">2</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-12</td>
+              <td style="color:#58a6ff">Nifty50 ATM V7</td>
+              <td style="color:#8b949e">1</td>
+              <td style="color:#e6edf3">&#8377;282.75</td>
+              <td style="color:#fb8500">&#8377;40</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;242.75</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">Nifty Bees Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;1938.75</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1938.75</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-15</td>
+              <td style="color:#58a6ff">Bajaj Finance Strategy</td>
+              <td style="color:#8b949e">1</td>
+              <td style="color:#e6edf3">&#8377;90.0</td>
+              <td style="color:#fb8500">&#8377;40</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;50.0</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-15</td>
+              <td style="color:#58a6ff">BN ATM Strategy V1</td>
+              <td style="color:#8b949e">12</td>
+              <td style="color:#e6edf3">&#8377;1783.5</td>
+              <td style="color:#fb8500">&#8377;480</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1303.5</td>
+              <td style="color:#f0b429">91.67%</td>
+              <td style="color:#3fb950">11</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2 (old)</td>
+              <td style="color:#8b949e">10</td>
+              <td style="color:#e6edf3">&#8377;279.75</td>
+              <td style="color:#fb8500">&#8377;400</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-120.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">5</td>
+              <td style="color:#f85149">5</td>
+            </tr><tr>
+              <td>2026-06-12</td>
+              <td style="color:#58a6ff">BN ATM Strategy V2</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;348.0</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;268.0</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">2</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-12</td>
+              <td style="color:#58a6ff">BN ATM Strategy V7</td>
+              <td style="color:#8b949e">11</td>
+              <td style="color:#e6edf3">&#8377;1110.0</td>
+              <td style="color:#fb8500">&#8377;440</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;670.0</td>
+              <td style="color:#f0b429">90.91%</td>
+              <td style="color:#3fb950">10</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-15</td>
+              <td style="color:#58a6ff">BN ATM V1</td>
+              <td style="color:#8b949e">13</td>
+              <td style="color:#e6edf3">&#8377;1707.0</td>
+              <td style="color:#fb8500">&#8377;520</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1187.0</td>
+              <td style="color:#f0b429">69.23%</td>
+              <td style="color:#3fb950">9</td>
+              <td style="color:#f85149">4</td>
+            </tr><tr>
+              <td>2026-06-15</td>
+              <td style="color:#58a6ff">BN ATM V2</td>
+              <td style="color:#8b949e">8</td>
+              <td style="color:#e6edf3">&#8377;1351.5</td>
+              <td style="color:#fb8500">&#8377;320</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1031.5</td>
+              <td style="color:#f0b429">62.5%</td>
+              <td style="color:#3fb950">5</td>
+              <td style="color:#f85149">3</td>
+            </tr><tr>
+              <td>2026-06-15</td>
+              <td style="color:#58a6ff">BN ATM V3</td>
+              <td style="color:#8b949e">11</td>
+              <td style="color:#e6edf3">&#8377;1201.5</td>
+              <td style="color:#fb8500">&#8377;440</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;761.5</td>
+              <td style="color:#f0b429">72.73%</td>
+              <td style="color:#3fb950">8</td>
+              <td style="color:#f85149">3</td>
+            </tr><tr>
+              <td>2026-06-15</td>
+              <td style="color:#58a6ff">BN ATM V4</td>
+              <td style="color:#8b949e">5</td>
+              <td style="color:#e6edf3">&#8377;351.0</td>
+              <td style="color:#fb8500">&#8377;200</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;151.0</td>
+              <td style="color:#f0b429">60.0%</td>
+              <td style="color:#3fb950">3</td>
+              <td style="color:#f85149">2</td>
+            </tr><tr>
+              <td>2026-06-15</td>
+              <td style="color:#58a6ff">BN ATM V5</td>
+              <td style="color:#8b949e">7</td>
+              <td style="color:#e6edf3">&#8377;1063.5</td>
+              <td style="color:#fb8500">&#8377;280</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;783.5</td>
+              <td style="color:#f0b429">71.43%</td>
+              <td style="color:#3fb950">5</td>
+              <td style="color:#f85149">2</td>
+            </tr><tr>
+              <td>2026-06-15</td>
+              <td style="color:#58a6ff">BN ATM V6</td>
+              <td style="color:#8b949e">1</td>
+              <td style="color:#e6edf3">&#8377;315.0</td>
+              <td style="color:#fb8500">&#8377;40</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;275.0</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-12</td>
+              <td style="color:#58a6ff">BN LTQ Pure V1</td>
+              <td style="color:#8b949e">7</td>
+              <td style="color:#e6edf3">&#8377;198.0</td>
+              <td style="color:#fb8500">&#8377;280</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-82.0</td>
+              <td style="color:#f0b429">42.86%</td>
+              <td style="color:#3fb950">3</td>
+              <td style="color:#f85149">4</td>
+            </tr><tr>
+              <td>2026-06-12</td>
+              <td style="color:#58a6ff">BN LTQ Strategy V1</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;-69.0</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-149.0</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BN Straddle V3</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;-113.25</td>
+              <td style="color:#fb8500">&#8377;100</td>
+              <td style="color:#f85149;font-weight:700">&#8377;-213.25</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr><tr>
+              <td>2026-06-03</td>
+              <td style="color:#58a6ff">BankNifty Trades</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;700.5</td>
+              <td style="color:#fb8500">&#8377;80</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;620.5</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">2</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-15</td>
+              <td style="color:#58a6ff">Nifty50 ATM V6</td>
+              <td style="color:#8b949e">3</td>
+              <td style="color:#e6edf3">&#8377;841.75</td>
+              <td style="color:#fb8500">&#8377;120</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;721.75</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">3</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-06-15</td>
+              <td style="color:#58a6ff">Nifty50 ATM V7</td>
+              <td style="color:#8b949e">1</td>
+              <td style="color:#e6edf3">&#8377;299.0</td>
+              <td style="color:#fb8500">&#8377;40</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;259.0</td>
+              <td style="color:#f0b429">100.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">0</td>
+            </tr><tr>
+              <td>2026-05-22</td>
+              <td style="color:#58a6ff">Nifty Bees Strategy</td>
+              <td style="color:#8b949e">2</td>
+              <td style="color:#e6edf3">&#8377;1938.75</td>
+              <td style="color:#fb8500">&#8377;0</td>
+              <td style="color:#3fb950;font-weight:700">&#8377;1938.75</td>
+              <td style="color:#f0b429">50.0%</td>
+              <td style="color:#3fb950">1</td>
+              <td style="color:#f85149">1</td>
+            </tr></tbody>
+        </table></div></div>
+    <div class="footer-ts">Last Updated: 2026-06-15 09:49:51</div>
+  </div>
+</div>
+<script>
+function updateDateTime(){
+  const now=new Date();
+  const d=now.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const t=now.toLocaleTimeString('en-IN');
+  const el=document.getElementById('datetime');
+  if(el) el.innerHTML='&#128197; '+d+' &nbsp;|&nbsp; &#9200; '+t;
+}
+setInterval(updateDateTime,1000); updateDateTime();
+function toggleMenu(){document.querySelector('.sidebar').classList.toggle('open');}
+</script>
+</body>
+</html>
